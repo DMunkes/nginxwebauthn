@@ -63,7 +63,15 @@ async function configure() {
           clientDataJSON: barraytoa(result.response.clientDataJSON),
           signature: barraytoa(result.response.signature)
         }), headers:{ 'Content-Type': 'application/json' }})
-        window.location.href = "/"
+
+        // Find the new URL to redirect to.
+        let path = '/'
+        path += window.location.pathname.slice('%s/'.length)
+        path += window.location.search
+        if (window.location.hash) {
+           path += '#' + window.location.hash
+        }
+        window.location.href = path
     }
     if (json.error == 'not_configured') {
         configure();
@@ -127,18 +135,18 @@ class AuthHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             return
 
-        if self.path == HTTP_PREFIX + "/login":
++        if self.path.startswith(HTTP_PREFIX + '/login'):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(bytes((FORM % (HTTP_PREFIX, HTTP_PREFIX + "/get_challenge_for_existing_key", HTTP_PREFIX)), 'UTF-8'))
+            self.wfile.write(bytes((FORM % (HTTP_PREFIX, HTTP_PREFIX + "/get_challenge_for_existing_key", HTTP_PREFIX, HTTP_PREFIX + '/login')), 'UTF-8'))
             return
 
         if self.path == HTTP_PREFIX + "/register":
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write(bytes((FORM % (HTTP_PREFIX, HTTP_PREFIX + "/register", HTTP_PREFIX)), 'UTF-8'))
+            self.wfile.write(bytes((FORM % (HTTP_PREFIX, HTTP_PREFIX + "/register", HTTP_PREFIX, HTTP_PREFIX + '/login')), 'UTF-8'))
             return
 
         if self.path == HTTP_PREFIX + '/logout':

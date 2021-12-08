@@ -20,7 +20,7 @@ server {
     # If the authorization server returns 401 Unauthorized, redirect to /atuh/login
     error_page 401 = @error401;
     location @error401 {
-        return 302 /nginx_fido_auth/login;
+        return 302 /nginx_fido_auth/login$request_uri;
     }
 
     root /var/www/html;

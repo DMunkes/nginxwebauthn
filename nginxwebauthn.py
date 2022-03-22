@@ -135,7 +135,7 @@ class AuthHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             return
 
-+        if self.path.startswith(HTTP_PREFIX + '/login'):
+        if self.path.startswith(HTTP_PREFIX + '/login'):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()

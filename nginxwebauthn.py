@@ -420,6 +420,7 @@ class AuthHandler(http.server.BaseHTTPRequestHandler):
               self.wfile.write(bytes(f"<head><link rel='stylesheet' href='style.css'></head><body><div class='form'><div class='success'>Success</div><div style='padding-top: 1em'><a href='{HTTP_PREFIX + '/login'}'>Login</div></div></body>", 'UTF-8'))
               return
             self.send_response(200)
+            self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write(bytes("<head><link rel='stylesheet' href='style.css'></head></body><div class='form'><div class='error'>Error</div></div></body>", 'UTF-8'))
             return

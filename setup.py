@@ -3,7 +3,7 @@ with open("readme.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
      name='nginxwebauthn-jv',  
-     version='0.1.4',
+     version='0.2.0',
      scripts=['nginxwebauthn.py', 'nginxwebauthn-ubuntu-install.py'] ,
      author="Jan Vitek",
      author_email="mail@janvitek.com",

@@ -21,7 +21,7 @@ config_contents = """
 # the token is then stored in /opt/nginxwebauthn/registrations
 AllowPreregistration = false
 
-# if FromEmail and AdminEmail are configured the user personal information is sent to the AdminEmail
+# if FromEmail and AdminEmail are configured the user personal information is sent to the AdminEmail requires running SMTP server (like postfix) on localhost:25
 #FromEmail = root@localhost
 #AdminEmail = root@localhost
 """

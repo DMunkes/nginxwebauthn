@@ -98,6 +98,50 @@ python -m twine upload dist/*
 
 - This uses the built-in python3 server, which isn't designed for high-volume. You'd want to port this to a uwsgi setup if you wanted to productionize it.
 
+## Version 0.2
+
+### New features
+
+- concurrent registrations
+- concurrent authentications
+- self registration
+- invitations
+
+### Configuration
+
+```
+#/etc/nginxwebauthn.conf
+
+[Global]
+# after succesful token registration a form is displayed where user can fill in the token name and their personal information
+# the token is then stored in /opt/nginxwebauthn/registrations
+AllowPreregistration = false
+
+# if FromEmail and AdminEmail are configured the user personal information is sent to the AdminEmail requires running SMTP server (like postfix) on localhost:25
+#FromEmail = root@localhost
+#AdminEmail = root@localhost
+```
+
+### Self registrations
+
+If enabled users can identify themselves during the registration process. The token data are then stored in `/opt/nginxwebauthn/registrations` and user information is sent to the admin email. The admin can later finish the registration process by moving the file to `/opt/nginxwebauthn/credentials`
+
+### Invitations
+
+The registration form can preload data for the inputs from the url params. The selected inputs can be hidden using the `hiddenElements` param. To later pair the registration data with your user there is a hidden field `externalId`.
+
+The credential file is stored in `/opt/nginxwebauthn/registrations` with `externalId` as a prefix.
+
+Fields:
+- username
+- tokenName
+- name
+- phone
+- email
+- externalId
+
+Example URL: `https://example.com/nginx_fido_auth/register?email=john.doe@example.com&externalId=1234uniqueToken&name=John Doe&phone=555123456&username=john.doe&hiddenElements=["username", "name", "phone", "email"]`
+
 ## FAQ
 
 *Why do I need to run the `save-client` command?*

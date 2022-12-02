@@ -38,6 +38,10 @@ if os.path.exists(CONFIG_FILE):
       ALLOW_EMAIL = True
       FROM_EMAIL = config['Global']['fromemail']
       ADMIN_EMAIL = config['Global']['adminemail']
+      if "smtpserver" in dict(config['Global'].items()).keys():
+        SMTP_SERVER = config['Global']['smtpserver']
+      else:
+        SMTP_SERVER = 'localhost'
     else:
       ALLOW_EMAIL = False
 
@@ -282,7 +286,7 @@ def send_registration_mail_to_admin(username, token_name, name, phone, email, ex
     return
 
   smtp = smtplib.SMTP()
-  smtp.connect('localhost')
+  smtp.connect(SMTP_SERVER)
 
   msgRoot = MIMEMultipart("alternative")
   msgRoot['Subject'] = Header("New nginxwebauthn registration", "utf-8")

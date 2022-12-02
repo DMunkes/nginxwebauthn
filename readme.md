@@ -120,7 +120,8 @@ AllowPreregistration = false
 # if FromEmail and AdminEmail are configured the user personal information is sent to the AdminEmail
 #FromEmail = root@localhost
 #AdminEmail = root@localhost
-#SMTPServer = localhost # defaults to localhost
+# SMTP server defaults to localhost
+#SMTPServer = localhost
 ```
 
 ### Self registrations
